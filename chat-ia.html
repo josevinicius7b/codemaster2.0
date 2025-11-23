@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat IA — Code Master</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif;}
+    body {background: #0f172a; color: #fff;}
+
+    header {background: #0b1120; padding: 14px 60px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 10px rgba(0,0,0,0.4);}
+    .logo {display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; color: #38bdf8;}
+    .logo i {font-size: 1.6rem; background: linear-gradient(90deg, #38bdf8, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+    nav {display: flex; gap: 25px; align-items: center;}
+    nav a {color: #e2e8f0; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 6px; transition: 0.3s; padding: 8px 14px; border-radius: 10px;}
+    nav a:hover, nav a.active {background: linear-gradient(90deg, #0ea5e9, #6366f1); box-shadow: 0 0 10px #0ea5e980;}
+    .menu-btn {display: none; font-size: 1.8rem; color: #fff; cursor: pointer; background: none; border: none;}
+
+    @media (max-width: 768px) {
+      nav {display: none; position: absolute; top: 70px; right: 20px; background: rgba(15, 23, 42, 0.95); flex-direction: column; width: 220px; border-radius: 16px; padding: 20px; box-shadow: 0 0 25px rgba(14,165,233,0.25);}
+      nav a {padding: 12px; border-radius: 12px;}
+      nav.show {display: flex; animation: fadeIn 0.3s ease-in-out;}
+      @keyframes fadeIn {from {opacity: 0; transform: translateY(-10px);} to {opacity: 1; transform: translateY(0);}}
+      .menu-btn {display: block;}
+    }
+
+    .chat-section {padding: 100px 20px; text-align: center;}
+    .chat-section h1 {font-size: 2.5rem; background: linear-gradient(90deg, #38bdf8, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;}
+    .chat-box {background: #1e293b; border-radius: 20px; max-width: 800px; margin: 0 auto; padding: 30px; box-shadow: 0 0 20px rgba(14,165,233,0.2);}
+    .chat-box p {color: #cbd5e1; margin-bottom: 15px;}
+    .chat-input {margin-top: 20px; display: flex; gap: 10px;}
+    .chat-input input {flex: 1; padding: 12px; border-radius: 10px; border: none; background: #0f172a; color: #fff; outline: none;}
+    .chat-input button {padding: 12px 20px; background: linear-gradient(90deg, #06b6d4, #3b82f6); border: none; border-radius: 10px; cursor: pointer; color: #fff; font-weight: 600; transition: 0.3s;}
+    .chat-input button:hover {transform: translateY(-2px); box-shadow: 0 0 20px rgba(59,130,246,0.5);}
+
+    .suggestions {margin-top: 25px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;}
+    .suggestions button {background: #0f172a; border: 1px solid #3b82f6; color: #93c5fd; padding: 8px 14px; border-radius: 10px; cursor: pointer; transition: 0.3s;}
+    .suggestions button:hover {background: #1e293b; color: #fff;}
+
+    footer {background: #0b1120; padding: 25px 20px; text-align: center; color: #94a3b8; border-top: 1px solid #1e293b;}
+    footer .footer-logo {color: #38bdf8; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 5px;}
+    footer span {color: #f87171;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><i class="ri-code-s-slash-line"></i> Code Master</div>
+    <button class="menu-btn" id="menu-btn"><i class="ri-menu-line"></i></button>
+    <nav id="nav">
+      <a href="index.html"><i class="ri-home-5-line"></i> Início</a>
+      <a href="mini-curso.html"><i class="ri-booklet-line"></i> Mini Cursos</a>
+      <a href="comunidade.html"><i class="ri-community-line"></i> Comunidade</a>
+      <a href="biblioteca.html"><i class="ri-book-2-line"></i> Biblioteca</a>
+      <a href="#" class="active"><i class="ri-chat-1-line"></i> Chat IA</a>
+    </nav>
+  </header>
+
+  <section class="chat-section">
+    <h1>Chat IA Aprendiz</h1>
+    <div class="chat-box" id="chat-box">
+      <p>Converse com a nossa IA e tire dúvidas sobre programação, códigos e conceitos de desenvolvimento.</p>
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Digite sua pergunta aqui...">
+        <button id="send-btn">Enviar</button>
+      </div>
+
+      <div class="suggestions">
+        <button>O que é HTML?</button>
+        <button>Como funciona o JavaScript?</button>
+        <button>O que é CSS e para que serve?</button>
+        <button>Como criar um site responsivo?</button>
+        <button>O que é uma API?</button>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const nav = document.getElementById('nav');
+    const icon = menuBtn.querySelector('i');
+    menuBtn.addEventListener('click', () => {
+      nav.classList.toggle('show');
+      icon.classList.toggle('ri-menu-line');
+      icon.classList.toggle('ri-close-line');
+    });
+
+    const respostas = {
+      "o que é html": "HTML (HyperText Markup Language) é a linguagem usada para estruturar páginas web. Ela usa tags para definir elementos como títulos, parágrafos, imagens e links. Por exemplo, <h1> cria um título e <p> cria um parágrafo.",
+      "o que é css": "CSS (Cascading Style Sheets) é o que define o visual do seu site. Com ele, você pode mudar cores, tamanhos, fontes e criar layouts responsivos. Ele trabalha junto com o HTML para deixar a página bonita e organizada.",
+      "como funciona o javascript": "JavaScript é uma linguagem de programação usada para adicionar interatividade às páginas web. Ele pode responder a cliques, validar formulários, criar animações e até se comunicar com servidores por meio de APIs.",
+      "como criar um site responsivo": "Um site responsivo se adapta a qualquer tela — celular, tablet ou computador. Você pode usar unidades flexíveis (como %) e media queries no CSS, por exemplo: @media (max-width: 768px) { ... } para ajustar o layout.",
+      "o que é uma api": "API (Application Programming Interface) é um conjunto de regras que permite que diferentes sistemas conversem entre si. Por exemplo, um site pode usar a API do Google Maps para mostrar um mapa interativo.",
+      "o que é python": "Python é uma linguagem de programação muito usada em automação, análise de dados, inteligência artificial e desenvolvimento web. É conhecida por ser simples, legível e poderosa.",
+      "como aprender programação": "O segredo é praticar! Comece com HTML, CSS e JavaScript. Faça pequenos projetos, leia códigos de outras pessoas e use plataformas como CodePen e GitHub. A prática constante é o que traz resultado.",
+      "o que é banco de dados": "Banco de dados é onde as informações de um sistema são armazenadas. Existem bancos relacionais (como MySQL e PostgreSQL) e não relacionais (como MongoDB). Eles são essenciais para guardar e consultar dados de forma organizada.",
+      "como funciona o git": "Git é um sistema de controle de versão que permite acompanhar mudanças no código e trabalhar em equipe. Você pode criar commits (salvar versões), branches (linhas paralelas de código) e usar plataformas como GitHub para colaborar.",
+      "o que é react": "React é uma biblioteca JavaScript criada pelo Facebook para construir interfaces de usuário. Ele usa componentes e um conceito chamado Virtual DOM para tornar os sites mais rápidos e dinâmicos."
+    };
+
+    const input = document.getElementById("user-input");
+    const btn = document.getElementById("send-btn");
+    const chatBox = document.getElementById("chat-box");
+
+    function responderPergunta(pergunta) {
+      const msg = pergunta.toLowerCase();
+      let resposta = "Desculpe, ainda não aprendi sobre esse assunto. Tente perguntar de outra forma!";
+      for (const key in respostas) {
+        if (msg.includes(key)) {
+          resposta = respostas[key];
+          break;
+        }
+      }
+      const userMsg = document.createElement("p");
+      userMsg.style.color = "#60a5fa";
+      userMsg.textContent = "Você: " + pergunta;
+
+      const botMsg = document.createElement("p");
+      botMsg.textContent = "IA: " + resposta;
+
+      chatBox.insertBefore(userMsg, chatBox.querySelector(".chat-input"));
+      chatBox.insertBefore(botMsg, chatBox.querySelector(".chat-input"));
+    }
+
+    btn.addEventListener("click", () => {
+      const pergunta = input.value.trim();
+      if (pergunta) responderPergunta(pergunta);
+      input.value = "";
+    });
+
+    document.querySelectorAll(".suggestions button").forEach(btn => {
+      btn.addEventListener("click", () => responderPergunta(btn.textContent));
+    });
+  </script>
+</body>
+</html>

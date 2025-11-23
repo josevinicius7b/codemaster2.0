@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca — Code Master</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    /* ===== Navbar ===== */
+    header {
+      background: #0b1120;
+      padding: 14px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 10px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .logo i {
+      font-size: 1.6rem;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      transition: 0.3s;
+    }
+
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+      padding: 8px 14px;
+      border-radius: 10px;
+    }
+
+    nav a:hover,
+nav a.active {
+  background: linear-gradient(90deg, #0ea5e9, #6366f1);
+  box-shadow: 0 0 10px #0ea5e980;
+}
+
+/* Botão Hamburguer */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #38bdf8;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  header {
+    padding: 14px 25px;
+  }
+  
+  nav {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: #0b1120;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    display: none;
+  }
+  
+  nav.active {
+    display: flex;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+}
+    }
+
+    /* Botão Hamburguer */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: #38bdf8;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        padding: 14px 25px;
+      }
+
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: #0b1120;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        display: none;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* ===== Biblioteca ===== */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 40px 0;
+    }
+
+    .filters button {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .filters button.active,
+    .filters button:hover {
+      background: linear-gradient(90deg, #0ea5e9, #6366f1);
+      color: #fff;
+      box-shadow: 0 0 10px #0ea5e980;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 60px 80px;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid transparent;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      border-color: #0ea5e9;
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #0ea5e940;
+    }
+
+    .card i {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: #94a3b8;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: #0b1120;
+      padding: 25px 20px;
+      text-align: center;
+      color: #94a3b8;
+      border-top: 1px solid #1e293b;
+    }
+
+    footer .footer-logo {
+      color: #38bdf8;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+
+    footer span {
+      color: #f87171;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== MENU (AGORA RESPONSIVO) ===== -->
+  <header>
+    <div class="logo"><i class="ri-code-s-slash-line"></i>Code Master</div>
+    <button class="menu-toggle" id="menu-btn"><i class="ri-menu-line"></i></button>
+    <nav id="nav-menu">
+      <a href="index.html"><i class="ri-home-5-line"></i> Início</a>
+      <a href="mini-curso.html"><i class="ri-booklet-line"></i> Mini Cursos</a>
+      <a href="comunidade.html"><i class="ri-community-line"></i> Comunidade</a>
+      <a href="#" class="active"><i class="ri-book-2-line"></i> Biblioteca</a>
+      <a href="chat-ia.html"><i class="ri-chat-1-line"></i> Chat IA</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Biblioteca</h1>
+    <p>Explore uma coleção de artigos, livros e guias criados para ajudar você a evoluir como desenvolvedor.</p>
+  </section>
+
+  <section class="filters">
+    <button class="active" data-filter="all">Todos</button>
+    <button data-filter="artigo">Artigos</button>
+    <button data-filter="livro">Livros</button>
+    <button data-filter="guia">Guias</button>
+  </section>
+
+  <section class="cards">
+    <div class="card" data-category="guia">
+      <i class="ri-book-open-line"></i>
+      <h3>Guia de HTML5</h3>
+      <p>Este guia abrangente cobre os fundamentos do HTML5, incluindo semântica, formulários avançados e multimídia. Explore exemplos práticos, como a criação de layouts acessíveis com tags semânticas (&lt;header&gt;, &lt;main&gt;, &lt;footer&gt;), integração de vídeos e áudios, além de dicas para otimizar a acessibilidade e SEO em seus projetos web.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-css3-line"></i>
+      <h3>Estilos com CSS Moderno</h3>
+      <p>Aprenda a estilizar páginas web com as técnicas mais atuais de CSS, incluindo Flexbox, Grid, animações e transições suaves. Este guia detalha como criar layouts responsivos que se adaptam a diferentes dispositivos, utilização de variáveis CSS para temas dinâmicos e boas práticas para manter o código organizado e escalável.</p>
+    </div>
+
+    <div class="card" data-category="livro">
+      <i class="ri-javascript-line"></i>
+      <h3>JavaScript Essencial</h3>
+      <p>Domine a programação front-end com este livro completo de JavaScript. Aprenda desde os conceitos básicos, como variáveis e funções, até tópicos avançados, como manipulação do DOM, eventos, assincronismo com Promises e async/await, e integração com APIs. Inclui projetos práticos como calculadoras interativas e jogos simples.</p>
+    </div>
+
+    <div class="card" data-category="livro">
+      <i class="ri-braces-line"></i>
+      <h3>Programação em Python</h3>
+      <p>Este livro detalhado explora Python desde os fundamentos, como estruturas de dados (listas, dicionários, tuplas), até tópicos avançados como automação de tarefas, manipulação de arquivos e uso de bibliotecas populares como Pandas e Requests. Inclui exemplos práticos para criar scripts de automação e pequenos projetos de ciência de dados.</p>
+    </div>
+
+    <div class="card" data-category="artigo">
+      <i class="ri-article-line"></i>
+      <h3>Artigo: APIs REST</h3>
+      <p>Entenda o funcionamento das APIs REST, incluindo conceitos de endpoints, métodos HTTP (GET, POST, PUT, DELETE) e autenticação. Este artigo detalha como consumir APIs em projetos web usando JavaScript (fetch) e Python (requests), com exemplos práticos de integração com APIs públicas, como a do GitHub, e dicas para lidar com erros e otimizar chamadas.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-terminal-line"></i>
+      <h3>Linux para Devs</h3>
+      <p>Guia essencial para desenvolvedores que utilizam Linux. Aprenda comandos fundamentais do terminal, como navegação de diretórios, gerenciamento de arquivos e permissões, além de configurar ambientes de desenvolvimento com ferramentas como Git, Docker e Node.js. Inclui boas práticas para automação com scripts Bash e otimização do fluxo de trabalho.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-database-2-line"></i>
+      <h3>Bancos de Dados SQL</h3>
+      <p>Explore os fundamentos de bancos de dados relacionais com SQL. Este guia cobre a criação de tabelas, consultas (SELECT, JOIN, GROUP BY), índices e normalização. Inclui exemplos práticos com MySQL e PostgreSQL, além de dicas para otimizar consultas e integrar bancos de dados com aplicações web.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-git-branch-line"></i>
+      <h3>Controle de Versão com Git</h3>
+      <p>Aprenda a usar Git para gerenciar projetos de desenvolvimento. Este guia detalha comandos essenciais (commit, branch, merge, push), fluxos de trabalho colaborativos com GitHub, e resolução de conflitos. Inclui exemplos práticos para configurar repositórios, criar pull requests e automatizar pipelines com GitHub Actions.</p>
+    </div>
+
+    <div class="card" data-category="livro">
+      <i class="ri-reactjs-line"></i>
+      <h3>Desenvolvimento com React</h3>
+      <p>Mergulhe no desenvolvimento front-end com este livro sobre React, uma das bibliotecas JavaScript mais populares. Cobre componentes, estados, props, hooks (useState, useEffect) e roteamento com React Router. Inclui projetos práticos como a criação de uma aplicação de lista de tarefas e integração com APIs externas.</p>
+    </div>
+
+    <div class="card" data-category="artigo">
+      <i class="ri-shield-check-line"></i>
+      <h3>Artigo: Segurança em Aplicações Web</h3>
+      <p>Entenda como proteger suas aplicações web contra vulnerabilidades comuns, como XSS, CSRF e injeção SQL. Este artigo explora boas práticas de segurança, como validação de entrada, autenticação segura com JWT, e configuração de cabeçalhos HTTP. Inclui exemplos práticos para implementar segurança em projetos reais.</p>
+    </div>
+
+    <div class="card" data-category="artigo">
+      <i class="ri-code-box-line"></i>
+      <h3>Artigo: Introdução ao TypeScript</h3>
+      <p>Descubra como o TypeScript adiciona tipagem estática ao JavaScript, melhorando a manutenção e escalabilidade de projetos. Este artigo cobre tipos, interfaces, generics e integração com frameworks como React. Inclui exemplos práticos para configurar um projeto TypeScript e dicas para migração de JavaScript.</p>
+    </div>
+
+    <div class="card" data-category="livro">
+      <i class="ri-book-mark-line"></i>
+      <h3>Node.js Avançado</h3>
+      <p>Este livro explora o desenvolvimento back-end com Node.js, abordando desde a criação de servidores com Express até tópicos avançados como autenticação, WebSockets e escalabilidade. Inclui projetos práticos como a construção de uma API RESTful e integração com bancos de dados como MongoDB e PostgreSQL.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-video-line"></i>
+      <h3>Guia de Vídeo: Criando uma API com Flask</h3>
+      <p>Este guia em vídeo ensina como criar uma API RESTful com Flask, um framework leve em Python. Cobre configuração do ambiente, criação de rotas, manipulação de solicitações HTTP e integração com bancos de dados. Inclui exemplos práticos para construir uma API de tarefas e deploy em servidores como Heroku.</p>
+    </div>
+
+    <div class="card" data-category="artigo">
+      <i class="ri-cloud-line"></i>
+      <h3>Artigo: Computação em Nuvem para Desenvolvedores</h3>
+      <p>Explore os conceitos de computação em nuvem e como utilizá-la em projetos de desenvolvimento. Este artigo detalha serviços como AWS, Azure e Google Cloud, abordando deploy de aplicações, uso de contêineres com Docker e Kubernetes, e otimização de custos. Inclui exemplos de deploy de uma aplicação web.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-test-tube-line"></i>
+      <h3>Guia de Testes Unitários</h3>
+      <p>Aprenda a escrever testes unitários para garantir a qualidade do seu código. Este guia cobre ferramentas como Jest (JavaScript) e Pytest (Python), com exemplos práticos de testes para funções, componentes React e APIs. Inclui boas práticas para TDD (Desenvolvimento Orientado a Testes) e cobertura de código.</p>
+    </div>
+
+    <div class="card" data-category="livro">
+      <i class="ri-book-3-line"></i>
+      <h3>Algoritmos e Estruturas de Dados</h3>
+      <p>Este livro detalha conceitos fundamentais de algoritmos e estruturas de dados, como listas ligadas, árvores, grafos e algoritmos de ordenação. Inclui implementações em Python e JavaScript, com exemplos práticos para resolver problemas comuns em entrevistas técnicas e otimização de performance.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-video-line"></i>
+      <h3>Guia de Vídeo: Introdução ao Docker</h3>
+      <p>Este guia em vídeo introduz o Docker para desenvolvedores, ensinando como criar, gerenciar e orquestrar contêineres. Cobre a criação de imagens, configuração de contêineres para aplicações web e integração com ferramentas como Docker Compose. Inclui um projeto prático para deploy de uma aplicação full-stack.</p>
+    </div>
+
+    <div class="card" data-category="artigo">
+      <i class="ri-smartphone-line"></i>
+      <h3>Artigo: Desenvolvimento Mobile com React Native</h3>
+      <p>Aprenda a criar aplicativos móveis multiplataforma com React Native. Este artigo explora componentes, navegação, integração com APIs e publicação nas lojas de aplicativos. Inclui exemplos práticos para desenvolver um aplicativo de lista de tarefas e dicas para otimizar a performance em iOS e Android.</p>
+    </div>
+
+    <div class="card" data-category="livro">
+      <i class="ri-server-line"></i>
+      <h3>Arquitetura de Microserviços</h3>
+      <p>Este livro explora os princípios de arquitetura de microserviços, incluindo decomposição de aplicações, comunicação entre serviços e escalabilidade. Cobre ferramentas como Docker, Kubernetes e RabbitMQ, com exemplos práticos para construir sistemas distribuídos robustos e tolerantes a falhas.</p>
+    </div>
+
+    <div class="card" data-category="guia">
+      <i class="ri-graduation-cap-line"></i>
+      <h3>Guia de Carreira para Desenvolvedores</h3>
+      <p>Este guia oferece orientações para construir uma carreira de sucesso como desenvolvedor. Cobre a criação de um portfólio, preparação para entrevistas técnicas, negociação de salários e aprendizado contínuo. Inclui dicas práticas para destacar-se no mercado e construir uma presença online profissional.</p>
+    </div>
+  </section>
+
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+    const filterButtons = document.querySelectorAll('.filters button');
+    const cards = document.querySelectorAll('.card');
+
+    // Menu toggle functionality
+    menuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuBtn.innerHTML = navMenu.classList.contains('active')
+        ? '<i class="ri-close-line"></i>'
+        : '<i class="ri-menu-line"></i>';
+    });
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        // Get filter value
+        const filter = button.getAttribute('data-filter');
+
+        // Show/hide cards based on filter
+        cards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

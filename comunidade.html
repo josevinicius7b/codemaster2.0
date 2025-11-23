@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidade — Code Master</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --accent: #8b5cf6;
+      --tag-bg: #3b3b5c;
+      --tag-color: #d8b4fe;
+      --primary: #38bdf8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    /* ===== Navbar ===== */
+    header {
+      background: #0b1120;
+      padding: 14px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 10px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .logo i {
+      font-size: 1.6rem;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      transition: 0.3s;
+    }
+
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+      padding: 8px 14px;
+      border-radius: 10px;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: linear-gradient(90deg, #0ea5e9, #6366f1);
+      box-shadow: 0 0 10px #0ea5e980;
+    }
+
+    /* Botão Hamburguer */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: #38bdf8;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        padding: 14px 25px;
+      }
+
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: #0b1120;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        display: none;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* ===== CONTEÚDO ===== */
+    .container {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #e879f9;
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 40px;
+    }
+
+    /* ===== BOTÃO POSTAR ===== */
+    .post-button {
+      display: block;
+      margin: 0 auto 30px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .post-button:hover {
+      background: #7c3aed;
+      transform: translateY(-1px);
+    }
+
+    /* ===== FORMULÁRIO DE POSTAGEM ===== */
+    .post-form {
+      background: var(--card);
+      border: 1px solid #2a2a40;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      display: none;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #2a2a40;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+
+    .tags-input {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .tag-input input {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      width: calc(100% - 10px);
+    }
+
+    .post-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    .post-btn:hover {
+      background: #7c3aed;
+      transform: translateY(-1px);
+    }
+
+    /* ===== POST ===== */
+    .posts-container {
+      min-height: 400px;
+    }
+
+    .post {
+      background: var(--card);
+      border: 1px solid #2a2a40;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      transition: 0.3s;
+    }
+
+    .post:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 0 12px #8b5cf640;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .post-header img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+      object-fit: cover;
+    }
+
+    .post-header .info strong {
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .post-header .info p {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .post h2 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .post p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .actions span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .actions span:hover {
+      color: var(--accent);
+    }
+
+    .actions i {
+      font-size: 1rem;
+    }
+
+    .comments-section {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #2a2a40;
+    }
+
+    .comment-form {
+      margin-bottom: 10px;
+    }
+
+    .comment-form input[type="text"] {
+      width: 50%;
+      padding: 8px 12px;
+      border: 1px solid #2a2a40;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: var(--text);
+      font-size: 0.9rem;
+      margin-right: 10px;
+    }
+
+    .comment-form input[name="commenterName"] {
+      width: 20%;
+      padding: 8px 12px;
+      border: 1px solid #2a2a40;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: var(--text);
+      font-size: 0.9rem;
+      margin-right: 10px;
+    }
+
+    .comment-form button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .comment-form button:hover {
+      background: #7c3aed;
+    }
+
+    .comment {
+      background: #2a2a40;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+    }
+
+    .no-posts {
+      text-align: center;
+      color: #94a3b8;
+      font-style: italic;
+      padding: 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <header>
+    <div class="logo"><i class="ri-code-s-slash-line"></i>Code Master</div>
+    <button class="menu-toggle" id="menu-btn"><i class="ri-menu-line"></i></button>
+    <nav id="nav-menu">
+      <a href="index.html"><i class="ri-home-5-line"></i> Início</a>
+      <a href="mini-curso.html"><i class="ri-booklet-line"></i> Mini Cursos</a>
+      <a href="comunidade.html" class="active"><i class="ri-community-line"></i> Comunidade</a>
+      <a href="biblioteca.html"><i class="ri-book-2-line"></i> Biblioteca</a>
+      <a href="chat-ia.html"><i class="ri-chat-1-line"></i> Chat IA</a>
+    </nav>
+  </header>
+
+  <!-- ===== CONTEÚDO ===== -->
+  <div class="container">
+    <h1>Comunidade</h1>
+    <p class="subtitle">Conecte-se, compartilhe e aprenda junto</p>
+    <!-- ===== BOTÃO POSTAR ===== -->
+    <button class="post-button" onclick="toggleForm()">Postar</button>
+
+    <!-- ===== FORMULÁRIO DE POSTAGEM ===== -->
+    <div class="post-form" id="postForm">
+      <div class="form-group">
+        <label for="username">Seu nome:</label>
+        <input type="text" id="username" placeholder="Digite seu nome" maxlength="50">
+      </div>
+      <div class="form-group">
+        <label for="profileImage">Foto de Perfil:</label>
+        <input type="file" id="profileImage" accept="image/*" onchange="previewImage(event)">
+        <img id="profileImgPreview" style="display:none; width:50px; height:50px; border-radius:50%; margin-top:5px; border:2px solid var(--accent);">
+      </div>
+      <div class="form-group">
+        <label for="postTitle">Título do post:</label>
+        <input type="text" id="postTitle" placeholder="Digite o título do seu post" maxlength="100">
+      </div>
+      <div class="form-group">
+        <label for="postContent">Conteúdo:</label>
+        <textarea id="postContent" placeholder="Compartilhe sua experiência, pergunta ou dica..." maxlength="1000"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags (pressione Enter para adicionar):</label>
+        <div class="tags-input" id="tagsInput">
+          <!-- Tags serão adicionadas aqui dinamicamente -->
+        </div>
+        <div class="tag-input">
+          <input type="text" id="newTag" placeholder="Ex: JavaScript, React" maxlength="20">
+        </div>
+      </div>
+      <button class="post-btn" onclick="createPost()">Publicar Post</button>
+    </div>
+
+    <!-- ===== POSTS ===== -->
+    <div class="posts-container" id="postsContainer">
+      <div class="no-posts" id="noPostsMessage">
+        <i class="ri-chat-3-line"></i> Seja o primeiro a compartilhar algo na comunidade!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Menu toggle functionality
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuBtn.innerHTML = navMenu.classList.contains('active')
+        ? '<i class="ri-close-line"></i>'
+        : '<i class="ri-menu-line"></i>';
+    });
+
+    // Configuração da API
+    const API_URL = 'https://68f989adef8b2e621e7c7549.mockapi.io/posts';
+
+    // Variáveis globais
+    let posts = [];
+    let currentTags = [];
+
+    // Função para buscar posts da API
+    async function fetchPosts() {
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) throw new Error('Erro ao buscar posts');
+        posts = await response.json();
+        localStorage.setItem('codelearnPosts', JSON.stringify(posts)); // Sincroniza com localStorage
+        renderPosts();
+      } catch (error) {
+        console.error('Erro ao buscar posts:', error);
+        // Fallback para localStorage
+        posts = JSON.parse(localStorage.getItem('codelearnPosts')) || [];
+        renderPosts();
+      }
+    }
+
+    // Função para criar novo post na API
+    async function createPost() {
+      const username = document.getElementById('username').value.trim();
+      const title = document.getElementById('postTitle').value.trim();
+      const content = document.getElementById('postContent').value.trim();
+      const tags = currentTags;
+      const profileImg = document.getElementById('profileImgPreview').style.display !== 'none'
+        ? document.getElementById('profileImgPreview').src
+        : generateAvatar(username);
+
+      // Validações
+      if (!username || !title || !content) {
+        alert('Por favor, preencha nome, título e conteúdo do post.');
+        return;
+      }
+
+      if (username.length < 2) {
+        alert('O nome deve ter pelo menos 2 caracteres.');
+        return;
+      }
+
+      if (title.length < 5) {
+        alert('O título deve ter pelo menos 5 caracteres.');
+        return;
+      }
+
+      if (content.length < 10) {
+        alert('O conteúdo deve ter pelo menos 10 caracteres.');
+        return;
+      }
+
+      // Criar novo post
+      const newPost = {
+        id: Date.now(),
+        author: username,
+        avatar: profileImg,
+        title: title,
+        content: content,
+        tags: tags,
+        likes: 0,
+        comments: [],
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newPost)
+        });
+        if (!response.ok) throw new Error('Erro ao criar post');
+        const createdPost = await response.json();
+        posts.unshift(createdPost); // Adiciona o post retornado pela API ao início do array
+        localStorage.setItem('codelearnPosts', JSON.stringify(posts)); // Sincroniza com localStorage
+      } catch (error) {
+        console.error('Erro ao criar post:', error);
+        posts.unshift(newPost); // Adiciona localmente como fallback
+        localStorage.setItem('codelearnPosts', JSON.stringify(posts));
+      }
+
+      // Limpar formulário
+      document.getElementById('username').value = '';
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postContent').value = '';
+      currentTags = [];
+      updateTagsDisplay();
+      document.getElementById('profileImgPreview').style.display = 'none';
+      document.getElementById('profileImage').value = '';
+      document.getElementById('postForm').style.display = 'none';
+
+      // Renderizar posts
+      renderPosts();
+
+      alert('Post publicado com sucesso!');
+    }
+
+    // Função para renderizar posts
+    function renderPosts() {
+      const container = document.getElementById('postsContainer');
+      const noPostsMessage = document.getElementById('noPostsMessage');
+
+      if (posts.length === 0) {
+        container.innerHTML = '<div class="no-posts" id="noPostsMessage"><i class="ri-chat-3-line"></i> Seja o primeiro a compartilhar algo na comunidade!</div>';
+        return;
+      }
+
+      noPostsMessage.style.display = 'none';
+      container.innerHTML = posts.map((post, index) => `
+        <div class="post" data-index="${index}">
+          <div class="post-header">
+            <img src="${post.avatar || generateAvatar(post.author)}" alt="${post.author}" class="post-header img">
+            <div class="info">
+              <strong>${post.author}</strong>
+              <p>${formatTimeAgo(post.timestamp)}</p>
+            </div>
+          </div>
+          <h2>${post.title}</h2>
+          <p>${post.content}</p>
+          ${post.tags && post.tags.length > 0 ? `
+            <div class="tags">
+              ${post.tags.map(tag => `<div class="tag">#${tag}</div>`).join('')}
+            </div>
+          ` : ''}
+          <div class="actions">
+            <span><i class="ri-heart-line" onclick="toggleLike(${index})"></i> ${post.likes || 0}</span>
+            <span><i class="ri-chat-1-line" onclick="toggleComments(${index})"></i> ${post.comments ? post.comments.length : 0}</span>
+          </div>
+          <div class="comments-section" id="comments-${index}" style="display: none;">
+            <div class="comment-form">
+              <input type="text" name="commenterName" id="commenter-name-${index}" placeholder="Seu nome (opcional)" maxlength="50">
+              <input type="text" id="comment-input-${index}" placeholder="Adicione um comentário...">
+              <button onclick="addComment(${index})">Enviar</button>
+            </div>
+            ${post.comments ? post.comments.map(comment => `
+              <div class="comment">${comment.author ? `${comment.author}: ` : ''}${comment.text}</div>
+            `).join('') : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Função para adicionar tag
+    function addTag() {
+      const tagInput = document.getElementById('newTag');
+      const tagText = tagInput.value.trim();
+
+      if (tagText && !currentTags.includes(tagText) && currentTags.length < 5) {
+        currentTags.push(tagText);
+        updateTagsDisplay();
+        tagInput.value = '';
+      } else if (currentTags.length >= 5) {
+        alert('Máximo de 5 tags por post.');
+      } else if (currentTags.includes(tagText)) {
+        alert('Esta tag já foi adicionada.');
+      }
+    }
+
+    // Função para atualizar exibição das tags
+    function updateTagsDisplay() {
+      const container = document.getElementById('tagsInput');
+      container.innerHTML = currentTags.map(tag => `
+        <div class="tag" style="background: var(--accent); color: white;">
+          #${tag}
+          <button onclick="removeTag('${tag}')" style="background: none; border: none; color: inherit; cursor: pointer; margin-left: 5px; font-size: 0.8rem;">×</button>
+        </div>
+      `).join('') || '<div style="color: #94a3b8; font-size: 0.9rem;">Nenhuma tag adicionada</div>';
+    }
+
+    // Função para remover tag
+    function removeTag(tagToRemove) {
+      currentTags = currentTags.filter(tag => tag !== tagToRemove);
+      updateTagsDisplay();
+    }
+
+    // Função para pré-visualizar imagem
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('profileImgPreview');
+          img.src = e.target.result;
+          img.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Função para gerar avatar padrão
+    function generateAvatar(name) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 45;
+      canvas.height = 45;
+
+      const hash = name.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
+      const hue = Math.abs(hash) % 360;
+      ctx.fillStyle = `hsl(${hue}, 70%, 55%)`;
+      ctx.fillRect(0, 0, 45, 45);
+
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 20px Inter';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(name.charAt(0).toUpperCase(), 22.5, 22.5);
+
+      return canvas.toDataURL();
+    }
+
+    // Função para formatar tempo relativo
+    function formatTimeAgo(timestamp) {
+      const now = new Date();
+      const postTime = new Date(timestamp);
+      const diffMs = now - postTime;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMins / 60);
+      const diffDays = Math.floor(diffHours / 24);
+
+      if (diffMins < 1) return 'Agora mesmo';
+      if (diffMins < 60) return `${diffMins} minuto${diffMins > 1 ? 's' : ''} atrás`;
+      if (diffHours < 24) return `${diffHours} hora${diffHours > 1 ? 's' : ''} atrás`;
+      return `${diffDays} dia${diffDays > 1 ? 's' : ''} atrás`;
+    }
+
+    // Função para alternar exibição do formulário
+    function toggleForm() {
+      const form = document.getElementById('postForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Função para alternar exibição de comentários
+    function toggleComments(index) {
+      const commentsSection = document.getElementById(`comments-${index}`);
+      commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Função para adicionar comentário
+    async function addComment(index) {
+      const post = posts[index];
+      const commentInput = document.getElementById(`comment-input-${index}`);
+      const commenterNameInput = document.getElementById(`commenter-name-${index}`);
+      const commentText = commentInput.value.trim();
+      const commenterName = commenterNameInput.value.trim() || 'Anônimo';
+
+      if (commentText) {
+        if (!post.comments) post.comments = [];
+        post.comments.push({
+          author: commenterName !== 'Anônimo' ? commenterName : null,
+          text: commentText
+        });
+        commentInput.value = '';
+        commenterNameInput.value = '';
+
+        try {
+          const response = await fetch(`${API_URL}/${post.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(post)
+          });
+          if (!response.ok) throw new Error('Erro ao atualizar post');
+          localStorage.setItem('codelearnPosts', JSON.stringify(posts)); // Sincroniza com localStorage
+        } catch (error) {
+          console.error('Erro ao atualizar post:', error);
+          localStorage.setItem('codelearnPosts', JSON.stringify(posts)); // Salva localmente como fallback
+        }
+
+        // Re-renderizar apenas a seção de comentários do post atual
+        const commentsSection = document.getElementById(`comments-${index}`);
+        commentsSection.innerHTML = `
+          <div class="comment-form">
+            <input type="text" name="commenterName" id="commenter-name-${index}" placeholder="Seu nome (opcional)" maxlength="50">
+            <input type="text" id="comment-input-${index}" placeholder="Adicione um comentário...">
+            <button onclick="addComment(${index})">Enviar</button>
+          </div>
+          ${post.comments.map(comment => `
+            <div class="comment">${comment.author ? `${comment.author}: ` : ''}${comment.text}</div>
+          `).join('')}
+        `;
+      }
+    }
+
+    // Função para curtir/descurtir
+    async function toggleLike(index) {
+      const post = posts[index];
+      post.likes = (post.likes || 0) + 1;
+
+      try {
+        const response = await fetch(`${API_URL}/${post.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(post)
+        });
+        if (!response.ok) throw new Error('Erro ao atualizar post');
+        localStorage.setItem('codelearnPosts', JSON.stringify(posts)); // Sincroniza com localStorage
+      } catch (error) {
+        console.error('Erro ao atualizar post:', error);
+        localStorage.setItem('codelearnPosts', JSON.stringify(posts)); // Salva localmente como fallback
+      }
+
+      // Re-renderizar apenas o post atual
+      const postElement = document.querySelector(`.post[data-index="${index}"]`);
+      postElement.innerHTML = `
+        <div class="post-header">
+          <img src="${post.avatar || generateAvatar(post.author)}" alt="${post.author}" class="post-header img">
+          <div class="info">
+            <strong>${post.author}</strong>
+            <p>${formatTimeAgo(post.timestamp)}</p>
+          </div>
+        </div>
+        <h2>${post.title}</h2>
+        <p>${post.content}</p>
+        ${post.tags && post.tags.length > 0 ? `
+          <div class="tags">
+            ${post.tags.map(tag => `<div class="tag">#${tag}</div>`).join('')}
+          </div>
+        ` : ''}
+        <div class="actions">
+          <span><i class="ri-heart-line" onclick="toggleLike(${index})"></i> ${post.likes}</span>
+          <span><i class="ri-chat-1-line" onclick="toggleComments(${index})"></i> ${post.comments ? post.comments.length : 0}</span>
+        </div>
+        <div class="comments-section" id="comments-${index}" style="display: none;">
+          <div class="comment-form">
+            <input type="text" name="commenterName" id="commenter-name-${index}" placeholder="Seu nome (opcional)" maxlength="50">
+            <input type="text" id="comment-input-${index}" placeholder="Adicione um comentário...">
+            <button onclick="addComment(${index})">Enviar</button>
+          </div>
+          ${post.comments ? post.comments.map(comment => `
+            <div class="comment">${comment.author ? `${comment.author}: ` : ''}${comment.text}</div>
+          `).join('') : ''}
+        </div>
+      `;
+    }
+
+    // Event listeners
+    document.getElementById('newTag').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addTag();
+      }
+    });
+
+    document.getElementById('postContent').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && e.ctrlKey) {
+        createPost();
+      }
+    });
+
+    // Inicializar página
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Buscar posts da API
+      await fetchPosts();
+
+      // Adicionar posts de teste apenas se não houver posts
+      if (posts.length === 0) {
+        const testPosts = [
+          {
+            id: Date.now() - 600000,
+            author: "Teste Usuário",
+            avatar: generateAvatar("Teste Usuário"),
+            title: "Primeiro Post de Teste",
+            content: "Este é um post de teste para verificar se está funcionando. Alguém tem dicas?",
+            tags: ["Teste", "Ajuda"],
+            likes: 0,
+            comments: [],
+            timestamp: new Date('2025-10-22T15:29:00-03:00').toISOString()
+          },
+          {
+            id: Date.now() - 300000,
+            author: "Maria Oliveira",
+            avatar: generateAvatar("Maria Oliveira"),
+            title: "Dica sobre CSS Grid",
+            content: "Aprendi que usar `grid-template-areas` facilita muito o layout responsivo. Alguém já testou isso?",
+            tags: ["CSS", "Design", "Dica"],
+            likes: 0,
+            comments: [],
+            timestamp: new Date('2025-10-22T15:34:00-03:00').toISOString()
+          }
+        ];
+        for (const post of testPosts) {
+          try {
+            const response = await fetch(API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(post)
+            });
+            if (!response.ok) throw new Error('Erro ao criar post de teste');
+            const createdPost = await response.json();
+            posts.unshift(createdPost);
+          } catch (error) {
+            console.error('Erro ao criar post de teste:', error);
+            posts.unshift(post); // Adiciona localmente como fallback
+          }
+        }
+        localStorage.setItem('codelearnPosts', JSON.stringify(posts));
+      }
+
+      // Renderizar posts
+      renderPosts();
+      updateTagsDisplay();
+    });
+
+    // Auto-save draft (opcional)
+    let draftTimeout;
+    function saveDraft() {
+      clearTimeout(draftTimeout);
+      draftTimeout = setTimeout(() => {
+        const draft = {
+          username: document.getElementById('username').value,
+          title: document.getElementById('postTitle').value,
+          content: document.getElementById('postContent').value,
+          timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('codelearnPostDraft', JSON.stringify(draft));
+      }, 1000);
+    }
+
+    document.getElementById('username').addEventListener('input', saveDraft);
+    document.getElementById('postTitle').addEventListener('input', saveDraft);
+    document.getElementById('postContent').addEventListener('input', saveDraft);
+
+    // Carregar draft ao iniciar (se existir)
+    window.addEventListener('load', () => {
+      const draft = localStorage.getItem('codelearnPostDraft');
+      if (draft) {
+        try {
+          const draftData = JSON.parse(draft);
+          document.getElementById('username').value = draftData.username || '';
+          document.getElementById('postTitle').value = draftData.title || '';
+          document.getElementById('postContent').value = draftData.content || '';
+        } catch (e) {
+          console.log('Erro ao carregar draft');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

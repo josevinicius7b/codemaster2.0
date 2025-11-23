@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Master — Início</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    /* ===== Navbar ===== */
+    header {
+      background: #0b1120;
+      padding: 14px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 10px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .logo i {
+      font-size: 1.6rem;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      transition: 0.3s;
+    }
+
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+      padding: 8px 14px;
+      border-radius: 10px;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: linear-gradient(90deg, #0ea5e9, #6366f1);
+      box-shadow: 0 0 10px #0ea5e980;
+    }
+
+    /* ===== Botão Hambúrguer ===== */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: #38bdf8;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ===== Responsivo ===== */
+    @media (max-width: 850px) {
+      header {
+        padding: 14px 25px;
+      }
+
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: #0b1120;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        display: none;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      text-align: center;
+      padding: 120px 20px 100px;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .hero img {
+      width: 110px;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px #6366f1);
+      transition: transform 0.3s;
+    }
+
+    .hero img:hover {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 30px #38bdf8);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 15px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      margin: 15px auto 40px;
+      max-width: 650px;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 26px;
+      border: none;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #06b6d4, #3b82f6);
+      color: #fff;
+      box-shadow: 0 0 15px #06b6d460;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px #3b82f660;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #c4b5fd;
+      border: 2px solid #8b5cf6;
+    }
+
+    .btn-outline:hover {
+      background: #8b5cf620;
+    }
+
+    /* ===== About Section ===== */
+    .about {
+      padding: 80px 20px;
+      text-align: center;
+      background: #111827;
+    }
+
+    .about h2 {
+      font-size: 2.2rem;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      color: #cbd5e1;
+      line-height: 1.7;
+      font-size: 1.1rem;
+    }
+
+    /* ===== Cards Section ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 60px;
+      background: #0f172a;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 30px;
+      transition: 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .card:hover {
+      border-color: #0ea5e9;
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #0ea5e940;
+    }
+
+    .card i {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* ===== CTA Section ===== */
+    .cta {
+      margin: 80px auto;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      padding: 60px 30px;
+      border-radius: 20px;
+      max-width: 900px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .cta p {
+      margin-bottom: 25px;
+      color: #e0e7ff;
+    }
+
+    .cta button {
+      padding: 12px 30px;
+      font-size: 1rem;
+      background: #38bdf8;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #0f172a;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .cta button:hover {
+      background: #06b6d4;
+      transform: scale(1.05);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #0b1120;
+      padding: 25px 20px;
+      text-align: center;
+      color: #94a3b8;
+      border-top: 1px solid #1e293b;
+    }
+
+    footer .footer-logo {
+      color: #38bdf8;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+    }
+
+    footer span {
+      color: #f87171;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><i class="ri-code-s-slash-line"></i> Code Master</div>
+    <button class="menu-toggle" id="menu-btn"><i class="ri-menu-line"></i></button>
+    <nav id="nav-menu">
+      <a href="#" class="active"><i class="ri-home-5-line"></i> Inicio</a>
+      <a href="mini-curso.html"><i class="ri-booklet-line"></i> Mini Cursos</a>
+      <a href="comunidade.html"><i class="ri-community-line"></i> Comunidade</a>
+      <a href="biblioteca.html"><i class="ri-book-2-line"></i> Biblioteca</a>
+      <a href="chat-ia.html"><i class="ri-chat-1-line"></i> Chat IA</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <img src="https://cdn-icons-png.flaticon.com/512/11517/11517956.png" alt="Logo CodeLearn">
+    <h1>Code Master</h1>
+    <p>A plataforma que une aprendizado prático, inteligência artificial e uma comunidade colaborativa para formar os melhores programadores do futuro.</p>
+    <div class="btns">
+      <button class="btn btn-primary" onclick="window.location.href='mini-curso.html'">Explorar Cursos</button>
+      <button class="btn btn-outline" onclick="window.location.href='chat-ia.html'">Conversar com IA</button>
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>Por que escolher o Code Master?</h2>
+<p>
+  O <strong>Code Master</strong> foi criado com o propósito de tornar o aprendizado de programação acessível, prático e envolvente para todos — 
+  desde iniciantes que estão dando seus primeiros passos até desenvolvedores que desejam aperfeiçoar suas habilidades.
+  <br><br>
+  Nossa plataforma reúne <strong>cursos curtos, diretos e totalmente interativos</strong>, projetados para acelerar o aprendizado e evitar a perda de tempo com conteúdos desnecessários. 
+  Cada módulo é cuidadosamente estruturado para que você compreenda a lógica da programação e aplique o conhecimento na prática, com exemplos reais e desafios estimulantes.
+  <br><br>
+  O <strong>assistente de IA integrado</strong> está sempre disponível para responder dúvidas, sugerir melhorias no seu código e auxiliar na resolução de problemas de forma personalizada. 
+  Além disso, você pode participar de uma <strong>comunidade ativa de desenvolvedores</strong>, trocar experiências, colaborar em projetos e compartilhar conquistas.
+  <br><br>
+  Explore nossa <strong>biblioteca de conteúdos</strong> com materiais atualizados, trilhas de aprendizado organizadas por nível de dificuldade e temas como 
+  <em>HTML, CSS, JavaScript, Python, lógica de programação, inteligência artificial</em> e muito mais.
+  <br><br>
+  No Code Master, você aprende de maneira simples, eficiente e divertida — evoluindo de forma constante até se tornar um verdadeiro <strong>mestre do código</strong>.
+</p>
+
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <i class="ri-code-s-slash-line"></i>
+      <h3>Mini Cursos Interativos</h3>
+      <p>Aprenda linguagens como JavaScript, Python, HTML, CSS e muito mais com exercícios práticos e feedback instantâneo.</p>
+    </div>
+    <div class="card">
+      <i class="ri-group-line"></i>
+      <h3>Comunidade de Devs</h3>
+      <p>Conecte-se com outros estudantes e profissionais, compartilhe ideias e cresça em grupo.</p>
+    </div>
+    <div class="card">
+      <i class="ri-book-2-line"></i>
+      <h3>Biblioteca de Conteúdos</h3>
+      <p>Acesse materiais exclusivos, artigos e guias criados por especialistas para reforçar seu aprendizado.</p>
+    </div>
+    <div class="card">
+      <i class="ri-robot-line"></i>
+      <h3>Chat IA Aprendiz</h3>
+      <p>Converse com uma IA treinada para te ajudar a entender conceitos, resolver bugs e aprender mais rápido.</p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <i class="ri-star-smile-line" style="font-size:2.5rem;"></i>
+    <h2>Pronto para começar sua jornada?</h2>
+    <p>Junte-se a milhares de devs que estão aprendendo e criando com o Code Master.</p>
+ 
+  </section>
+
+  <footer>
+    <div class="footer-logo"><i class="ri-code-s-slash-line"></i> Code Master</div>
+    <p>Feito com para desenvolvedores</p>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuBtn.innerHTML = navMenu.classList.contains('active') 
+        ? '<i class="ri-close-line"></i>' 
+        : '<i class="ri-menu-line"></i>';
+    });
+  </script>
+
+</body>
+</html>
