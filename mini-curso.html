@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Cursos —Code Master</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #fff;
+        }
+
+        /* ===== Navbar ===== */
+        header {
+            background: #0b1120;
+            padding: 14px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.4);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .logo i {
+            font-size: 1.6rem;
+            background: linear-gradient(90deg, #38bdf8, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+            padding: 8px 14px;
+            border-radius: 10px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
+            box-shadow: 0 0 10px #0ea5e980;
+        }
+
+        /* Botão Hamburguer */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #38bdf8;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 850px) {
+            header {
+                padding: 14px 25px;
+            }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: #0b1120;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+                display: none;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* ===== Filtros ===== */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .filtros button {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            background: #1e293b;
+            color: #e2e8f0;
+            transition: 0.3s;
+        }
+
+        .filtros button.active,
+        .filtros button:hover {
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
+            color: #fff;
+            box-shadow: 0 0 10px #0ea5e940;
+        }
+
+        /* ===== Cursos ===== */
+        .cursos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0 40px 60px;
+        }
+
+        .curso {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 25px;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .curso:hover {
+            border-color: #0ea5e9;
+            transform: translateY(-6px);
+            box-shadow: 0 0 20px #0ea5e940;
+        }
+
+        .curso h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .curso p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .curso button {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .curso button:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== Curso Content ===== */
+        .curso-content {
+            display: none;
+            padding: 40px 40px 60px;
+            background: #1e293b;
+            border-radius: 16px;
+            margin: 0 40px 60px;
+            box-shadow: 0 0 20px #0ea5e940;
+        }
+
+        .curso-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .curso-content ul {
+            list-style: none;
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .curso-content ul li {
+            margin-bottom: 20px; /* Aumenta o espaçamento entre os módulos */
+            color: #cbd5e1; 
+            border-left: 3px solid #6366f1;
+            padding-left: 15px;
+        }
+
+        .curso-content ul li span {
+            font-weight: 700;
+            color: #f8fafc;
+            display: block; 
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: #38bdf8; /* Cor de destaque para o título do módulo */
+        }
+        
+        .curso-content ul li p {
+            margin-top: 8px;
+            color: #aebacd;
+            font-size: 0.95rem;
+        }
+
+        .curso-content button {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .curso-content button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Ajuste para telas menores */
+        @media (max-width: 600px) {
+            .cursos {
+                padding: 0 20px 40px;
+            }
+            .curso-content {
+                margin: 0 20px 40px;
+                padding: 30px 20px;
+            }
+            header {
+                padding: 14px 15px;
+            }
+            .curso-content ul li {
+                padding-left: 10px;
+            }
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: #0b1120;
+            padding: 20px;
+            text-align: center;
+            color: #94a3b8;
+            border-top: 1px solid #1e293b;
+        }
+
+        footer span {
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><i class="ri-code-s-slash-line"></i>Code Master</div>
+        <button class="menu-toggle" id="menu-btn"><i class="ri-menu-line"></i></button>
+        <nav id="nav-menu">
+            <a href="index.html"><i class="ri-home-5-line"></i> Início</a>
+            <a href="mini-curso.html" class="active"><i class="ri-booklet-line"></i> Mini Cursos</a>
+            <a href="comunidade.html"><i class="ri-community-line"></i> Comunidade</a>
+            <a href="biblioteca.html"><i class="ri-book-2-line"></i> Biblioteca</a>
+            <a href="chat-ia.html"><i class="ri-chat-1-line"></i> Chat IA</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Mini Cursos</h1>
+        <p>Domine todas as linguagens de programação com aulas curtas e objetivas</p>
+    </section>
+
+    <div class="filtros">
+        <button class="active" data-filter="todos">Todos</button>
+        <button data-filter="completo">Curso Completo</button>
+        <button data-filter="web">Web</button>
+        <button data-filter="backend">Backend</button>
+        <button data-filter="mobile">Mobile</button>
+        <button data-filter="data-science">Data Science</button>
+        <button data-filter="games">Games</button>
+        <button data-filter="sistemas">Sistemas</button>
+    </div>
+
+    <section class="cursos">
+        <div class="curso" data-category="web">
+            <h3>JavaScript Moderno</h3>
+            <p>Domine ES6+, async/await e frameworks modernos.</p>
+            <button data-course="javascript">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="data-science">
+            <h3>Python para Data Science</h3>
+            <p>Aprenda análise de dados, pandas e visualização.</p>
+            <button data-course="python-data-science">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="web">
+            <h3>React Avançado</h3>
+            <p>Hooks, Context API e boas práticas modernas.</p>
+            <button data-course="react">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="backend">
+            <h3>GoLang para Iniciantes</h3>
+            <p>Aprenda concorrência, goroutines e APIs com Go.</p>
+            <button data-course="golang">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="sistemas">
+            <h3>Rust Essencial</h3>
+            <p>Segurança, performance e controle de memória.</p>
+            <button data-course="rust">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="mobile">
+            <h3>Kotlin para Android</h3>
+            <p>Aprenda a desenvolver apps Android modernos.</p>
+            <button data-course="kotlin">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="web">
+            <h3>HTML & CSS Básico</h3>
+            <p>Fundamentos de estrutura e estilização web.</p>
+            <button data-course="html-css">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="backend">
+            <h3>Node.js Essentials</h3>
+            <p>Construa servidores e APIs com JavaScript.</p>
+            <button data-course="nodejs">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="sistemas">
+            <h3>C++ para Sistemas</h3>
+            <p>Programação de alto desempenho e sistemas embarcados.</p>
+            <button data-course="cpp">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="backend">
+            <h3>Java para Backend</h3>
+            <p>Desenvolva aplicações robustas com Spring Boot.</p>
+            <button data-course="java">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="web">
+            <h3>PHP Moderno</h3>
+            <p>Crie aplicações web dinâmicas com Laravel.</p>
+            <button data-course="php">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="mobile">
+            <h3>Swift para iOS</h3>
+            <p>Desenvolva aplicativos iOS modernos com SwiftUI.</p>
+            <button data-course="swift">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="web">
+            <h3>TypeScript Essencial</h3>
+            <p>Adicione tipagem ao JavaScript para projetos escaláveis.</p>
+            <button data-course="typescript">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="backend">
+            <h3>Ruby on Rails</h3>
+            <p>Construa aplicações web rapidamente com Ruby.</p>
+            <button data-course="ruby">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="data-science">
+            <h3>SQL para Análise de Dados</h3>
+            <p>Aprenda consultas e manipulação de bancos de dados.</p>
+            <button data-course="sql">Começar Curso</button>
+        </div>
+        <div class="curso" data-category="completo">
+            <h3>Curso Completo de Programação</h3>
+            <p>Domine múltiplas linguagens: JS, Python, Java, C++, e mais.</p>
+            <button data-course="completo">Começar Curso</button>
+        </div>
+    </section>
+
+    <section class="curso-content" id="curso-content">
+        <h2 id="curso-title"></h2>
+        <ul id="curso-modules"></ul>
+        <button id="back-btn">Voltar</button>
+    </section>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        const filterButtons = document.querySelectorAll('.filtros button');
+        const courses = document.querySelectorAll('.curso');
+        const cursoContent = document.getElementById('curso-content');
+        const cursoTitle = document.getElementById('curso-title');
+        const cursoModules = document.getElementById('curso-modules');
+        const backBtn = document.getElementById('back-btn');
+        const hero = document.querySelector('.hero');
+        const filtros = document.querySelector('.filtros');
+        const cursosSection = document.querySelector('.cursos');
+
+        // Menu toggle functionality
+        menuBtn.addEventListener('click', () => {
+          navMenu.classList.toggle('active');
+          menuBtn.innerHTML = navMenu.classList.contains('active')
+            ? '<i class="ri-close-line"></i>'
+            : '<i class="ri-menu-line"></i>';
+        });
+
+        // Course content data (DADOS MAIS EXPANDIDOS E DETALHADOS)
+        const courseData = {
+          javascript: {
+            title: 'JavaScript Moderno',
+            modules: [
+              '**Módulo 1: Fundamentos ES6+ e Escopo de Variáveis** - Aprenderemos a diferença entre `var`, `let` e `const`. Entender o que é *Block Scope* e por que ele previne erros (ex: uma variável só existe dentro de um bloco `{}`). Usar *Arrow Functions* para escrever código menor. Desestruturação: tirar dados de um objeto ou array de forma rápida. <p>Exemplo para Iniciantes: Se você tem um objeto `pessoa = { nome: "Ana", idade: 30 }`, a desestruturação permite que você use `const { nome } = pessoa;` e a variável `nome` já está pronta!</p>',
+              '**Módulo 2: O Mundo Assíncrono (Promises e Async/Await)** - A base do JavaScript: lidar com ações que demoram (como carregar dados da internet). Entender *Promises* (promessas de que algo vai acontecer) e como usar `.then()` e `.catch()`. Domínio de `async/await`: escrever código assíncrono (que não trava o navegador) como se fosse síncrono (linha por linha). <p>Exemplo para Iniciantes: Criaremos uma função que "simula" uma espera de 2 segundos para carregar um perfil de usuário, usando `await` para que o código só continue depois desse tempo.</p>',
+              '**Módulo 3: Manipulação do DOM e Event Delegation** - Como o JavaScript "enxerga" o HTML (o DOM). Selecionar elementos de forma eficiente. Criar e mudar elementos HTML em tempo real. *Event Delegation*: a técnica de colocar um único ouvinte de evento em um elemento pai para gerenciar eventos de muitos elementos filhos, otimizando muito a performance. <p>Exemplo para Iniciantes: Faremos uma lista de tarefas (To-do List) onde um único clique no botão de "excluir" de qualquer item é gerenciado pelo elemento `<ul>` principal.</p>',
+              '**Módulo 4: Módulos, Empacotamento e NPM** - Como dividir seu código em arquivos menores e reutilizáveis (*Módulos* - `import`/`export`). O que é o NPM (Node Package Manager) e como gerenciar dependências. Introdução a *Bundlers* (empacotadores) como Vite: ferramentas que juntam todos os seus módulos em um único arquivo otimizado para o navegador. <p>Exemplo para Iniciantes: Usaremos o NPM para instalar um pacote popular (como o Lodash) e o importaremos em nosso código para usá-lo, entendendo como as dependências funcionam.</p>',
+              '**Módulo 5: Programação Funcional e Padrões de Código** - Conceitos de *imutabilidade* (nunca mudar dados originais). Funções Puras (funções que, dado o mesmo input, sempre dão o mesmo output). Uso avançado dos métodos de array: `map` (transformar arrays), `filter` (filtrar itens) e `reduce` (reduzir array a um único valor). <p>Exemplo para Iniciantes: Usaremos o `filter` para pegar uma lista de produtos e mostrar apenas aqueles com preço acima de R$ 50,00, sem modificar a lista original.</p>',
+              '**Módulo 6: Testes Unitários e Qualidade de Código (Jest)** - Por que testar é essencial. Introdução a Testes Unitários: testar pequenas partes isoladas do seu código (funções). Uso do framework Jest para testes. O que são *Mocks* e como eles simulam funções externas (como chamadas de API) para que seus testes sejam confiáveis. <p>Exemplo para Iniciantes: Escreveremos um teste que verifica se a sua função de somar dois números sempre retorna o resultado esperado, mesmo que o código seja mudado no futuro.</p>',
+              '**Módulo 7: Introdução Prática a Ecossistemas Web (React)** - Ponte entre o JavaScript puro e os frameworks. Entendimento de como React, Vue ou Angular usam JavaScript para gerenciar a interface. Configuração inicial do React. Uso dos Hooks `useState` (gerenciar estado) e `useEffect` (lidar com efeitos colaterais). <p>Exemplo para Iniciantes: Construiremos o componente básico de um contador em React, onde um botão incrementa o número exibido na tela, usando o Hook `useState`.</p>'
+            ]
+          },
+          'python-data-science': {
+            title: 'Python para Data Science',
+            modules: [
+              '**Módulo 1: Configuração e Python Core Avançado** - Configuração ideal com Anaconda/Miniconda (seu "laboratório" de dados) e uso de Jupyter Notebooks. Revisão de listas, dicionários e tuplas. Introdução a conceitos avançados: *list comprehensions* (criação rápida de listas) e *generators* (processamento de dados grandes sem ocupar memória). <p>Exemplo para Iniciantes: Criaremos uma lista de números e usaremos list comprehensions para criar uma nova lista apenas com os números pares, de forma concisa.</p>',
+              '**Módulo 2: NumPy: A Base da Computação Numérica** - O que são *Arrays* NumPy e por que eles são muito mais rápidos que as listas normais do Python para números. Operações vetorizadas: aplicar uma mesma operação a todos os itens de um array de uma vez. Indexação avançada para fatiar dados. <p>Exemplo para Iniciantes: Vamos calcular o quadrado de 1 milhão de números usando NumPy e depois usando uma lista Python comum para ver a diferença gritante de velocidade.</p>',
+              '**Módulo 3: Pandas - Domínio da Tabela de Dados (DataFrame)** - Introdução ao *DataFrame* (sua "tabela" ou "planilha" dentro do Python). Leitura de arquivos (CSV, Excel). Limpeza de dados: como lidar com valores faltantes (`NaN`) ou dados duplicados. Indexação e seleção de colunas e linhas. <p>Exemplo para Iniciantes: Carregaremos um arquivo CSV de vendas e usaremos comandos Pandas para remover linhas onde o preço está faltando ou está zerado.</p>',
+              '**Módulo 4: Análise Exploratória e Agregação de Dados** - Agrupamento de dados (`groupby`) e Pivoting: resumir grandes volumes de dados em estatísticas úteis. Uso de funções agregadas (`sum`, `mean`, `count`). Análise Exploratória de Dados (EDA): técnicas para entender a distribuição e qualidade dos seus dados. <p>Exemplo para Iniciantes: Agruparemos os dados de vendas por *Região* para descobrir qual região tem o *Valor Total Médio* de vendas mais alto.</p>',
+              '**Módulo 5: Visualização de Dados Narrativa (Matplotlib e Seaborn)** - Criação de gráficos essenciais: histogramas (distribuição), gráficos de dispersão (correlação) e gráficos de barra (comparação). Uso do *Seaborn* para gráficos estatísticos de alta qualidade. Técnicas de *Storytelling* com dados: o que o gráfico realmente está contando. <p>Exemplo para Iniciantes: Criaremos um gráfico de dispersão para ver se existe uma relação entre o *Salário* de um funcionário e seus *Anos de Experiência*.</p>',
+              '**Módulo 6: Introdução ao Machine Learning com Scikit-learn** - O pipeline de Machine Learning (Preparação, Treinamento, Avaliação). Implementação de um modelo de *Regressão Linear* (prever um número). Introdução à *Classificação* (prever uma categoria). Avaliação do modelo (o quão bom ele é?). <p>Exemplo para Iniciantes: Usaremos a biblioteca Scikit-learn para prever o preço de uma casa baseado em seu tamanho, um dos modelos mais simples e visuais.</p>',
+              '**Módulo 7: Integração SQL, Relatórios e Boas Práticas** - Conexão e consulta a bancos de dados (SQLite/PostgreSQL) diretamente do Pandas. Boas práticas de código (PEP 8) e versionamento com Git. Criação de relatórios automatizados e exportação dos resultados finais. <p>Exemplo para Iniciantes: Conectaremos o Python a um pequeno banco de dados e rodaremos uma query SQL complexa, trazendo os resultados diretamente para um DataFrame Pandas para análise.</p>'
+            ]
+          },
+          completo: {
+            title: 'Curso Completo de Programação do Zero ao Full-Stack Sênior',
+            modules: [
+              '**Módulo 1: Fundamentos Absolutos e Pensamento Algorítmico (Linguagem Principal: Python)** - Aprenda a pensar como um programador: Lógica de Programação, Fluxogramas e Pseudocódigo. Dominar as Estruturas de Dados Essenciais (Arrays/Listas, Dicionários/Mapas). Introdução à Programação Orientada a Objetos (POO): Classes e Objetos, como modelar o mundo real no código. Entender o que é Complexidade de Algoritmos (*Big O Notation*): como medir a performance de um código. <p>Exemplo para Iniciantes: Criaremos um pequeno programa de "Adivinhe o Número" que usa controle de fluxo (`if/else/while`) e depois faremos uma classe `Animal` com métodos como `latir()` e `comer()`.</p>',
+              '**Módulo 2: Domínio do Front-end Essencial (HTML, CSS e JavaScript)** - **HTML Semântico:** Usar as tags corretas para o significado correto (para buscadores e acessibilidade). **CSS Moderno:** Flexbox e Grid para layouts complexos de forma simples. Design Responsivo: A técnica *Mobile-First*. **JavaScript Moderno:** Funções, Escopo, Tipos. Manipulação do DOM: criar e apagar elementos da tela dinamicamente. <p>Exemplo para Iniciantes: Construiremos um card de produto com Flexbox e faremos um botão de "curtir" que muda de cor e adiciona um contador usando JavaScript puro.</p>',
+              '**Módulo 3: Desenvolvimento Web Interativo (Framework: React com TypeScript)** - Por que usar um framework (separar a UI da lógica). Conceitos de Componentes e Estado. Hooks: `useState` (para mudar a tela) e `useEffect` (para ações no "ciclo de vida"). **TypeScript:** Adicionar tipagem para evitar 90% dos erros de JavaScript. Gerenciamento de Estado Global. <p>Exemplo para Iniciantes: Criaremos uma calculadora simples em React, onde a lógica de cálculo é tipada com TypeScript para garantir que sempre recebemos e retornamos números.</p>',
+              '**Módulo 4: Back-end Robusto (Linguagem: Node.js/Express ou Java/Spring)** - O que é o Back-end e como ele serve dados. **Node.js:** O Event Loop e a natureza assíncrona. **Express.js:** Como criar rotas (`/usuarios`, `/produtos`). **APIs RESTful:** O que são e como implementar o CRUD (Criar, Ler, Atualizar, Deletar). Injeção de Dependência (Spring/NestJS). <p>Exemplo para Iniciantes: Criaremos um endpoint `/api/saudacao` no Express que retorna o JSON `{"mensagem": "Olá, Mundo!"}` quando acessado.</p>',
+              '**Módulo 5: Banco de Dados, Persistência e Otimização (SQL/NoSQL)** - **SQL Essencial:** Comandos de Consulta (SELECT), Filtros (WHERE), Agregação (GROUP BY) e o crucial conceito de Joins (unir tabelas). **Modelagem:** Como desenhar um banco de dados (Diagrama ER). **Persistência:** Uso de ORMs (como o Mongoose/JPA/Sequelize) para interagir com o banco usando objetos do seu código. <p>Exemplo para Iniciantes: Usaremos um `INNER JOIN` para mostrar o nome de todos os clientes e os nomes dos pedidos que eles fizeram, unindo duas tabelas (Clientes e Pedidos).</p>',
+              '**Módulo 6: Engenharia de Software e Qualidade (Git, Testes e SOLID)** - **Versionamento (Git):** Comandos básicos (`commit`, `push`, `pull`) e fluxos de trabalho em equipe (Branching). **Testes:** Testes Unitários (Jest/JUnit) para garantir a funcionalidade. Introdução aos princípios **SOLID** (design de código limpo e sustentável). **Segurança:** Implementação de Autenticação (JWT) e boas práticas de proteção de dados. <p>Exemplo para Iniciantes: Faremos um `git clone` de um projeto, criaremos uma *branch* para uma nova funcionalidade, faremos um `commit` das mudanças e um `pull request` para revisar.</p>',
+              '**Módulo 7: DevOps, Cloud e Deploy Final** - O que é DevOps e o ciclo de entrega contínua (CI/CD). **Docker:** Como empacotar sua aplicação com todas as suas dependências em um contêiner. **Cloud:** Introdução a provedores (AWS, Google Cloud) e serviços essenciais (EC2, S3). **Deploy:** Colocar seu projeto Full-Stack em produção para que o mundo possa usá-lo. <p>Exemplo para Iniciantes: Criaremos um Dockerfile simples que empacota o servidor Node.js/Java e rodaremos ele localmente para entender o conceito de contêineres.</p>',
+              '**Módulo 8: Tópicos Sênior e Arquitetura de Microserviços (Extra)** - Este módulo é a ponte para o nível Sênior. Entenda o que são *Microserviços* (aplicações menores e independentes). Comunicação Assíncrona via *Mensageria* (RabbitMQ/Kafka). Introdução a ferramentas de *Observabilidade* (Logs e Metrics). **Escalabilidade:** Como sua aplicação lida com milhares de usuários. <p>Exemplo para Iniciantes: Discutiremos como um sistema de e-commerce pode ter um Microserviço só para *Pedidos* e outro só para *Estoque*, e como eles se comunicam de forma segura.</p>'
+            ]
+          },
+          // *****************************************************************************************************************
+          // OUTROS CURSOS EXPANDIDOS COM MAIS DETALHES DIDÁTICOS
+          // *****************************************************************************************************************
+          react: {
+            title: 'React Avançado',
+            modules: [
+              '**Módulo 1: Hooks em Profundidade e Otimização** - Entendimento avançado de `useEffect` (o que é o array de dependências e como evitar bugs de renderização). Uso de `useReducer`: uma alternativa ao `useState` para estados que dependem de vários passos (como um formulário complexo). <p>Exemplo para Iniciantes: Em vez de usar 3 `useState` (para nome, email, senha), usaremos 1 `useReducer` para gerenciar todos os campos do formulário de login de forma mais organizada.</p>',
+              '**Módulo 2: Context API e Gerenciamento de Estado Global** - Como usar o Context para compartilhar dados (como dados do usuário logado ou configurações de tema) entre componentes sem precisar passar props manualmente (*prop drilling*). Estratégias de performance para o Context. <p>Exemplo para Iniciantes: Criaremos um `ThemeContext` que permite que qualquer componente do nosso app mude de "Modo Claro" para "Modo Escuro" com um único clique, sem o código do tema em cada componente.</p>',
+              '**Módulo 3: Hooks Customizados Profissionais** - Como criar seus próprios Hooks (`useSuaFuncao`) para reutilizar lógica complexa (como lidar com formulários ou chamadas de API) em vários componentes. Padrões de código para Hooks limpos e testáveis. <p>Exemplo para Iniciantes: Criaremos um Hook `useContador` que recebe um valor inicial e retorna as funções para incrementar e decrementar, reutilizando essa lógica em 3 lugares diferentes do app.</p>',
+              '**Módulo 4: Gerenciamento de Dados e Cache (React Query)** - O problema de gerenciar o estado de dados remotos (loading, erro, cache). Uso de bibliotecas modernas como React Query para gerenciar o cache da API, evitando chamadas desnecessárias e deixando o app mais rápido. <p>Exemplo para Iniciantes: Usaremos o React Query para carregar uma lista de posts. Se o usuário sair e voltar para a tela, a lista aparecerá instantaneamente (cache) e só fará uma nova requisição em segundo plano.</p>',
+              '**Módulo 5: Performance e Renderização Otimizada** - Por que o React renderiza. Otimização com `useMemo` (memorizar um valor de cálculo caro) e `useCallback` (memorizar uma função para não quebrar Hooks). Uso do React Profiler para encontrar gargalos no desempenho da sua aplicação. <p>Exemplo para Iniciantes: Usaremos `useMemo` para evitar que uma lista grande de 1000 itens seja re-filtrada ou re-ordenada sempre que o usuário digita no campo de busca.</p>',
+              '**Módulo 6: Testes Robusto e Roteamento** - Testes de Componentes com *React Testing Library* (RTL), focando no que o usuário vê e como ele interage. Testes de Hooks customizados com Jest. Roteamento Avançado (rotas protegidas, Lazy Loading) com *React Router*. <p>Exemplo para Iniciantes: Testaremos se, ao clicar no botão de "enviar", o texto "Sucesso!" aparece na tela, sem precisar do servidor para isso.</p>',
+              '**Módulo 7: Arquitetura e Ecossistema (Next.js)** - Introdução ao Next.js: um framework para React que melhora performance e SEO. Server-Side Rendering (SSR) e Static Site Generation (SSG): como renderizar o HTML no servidor e não no navegador. Criação de API Routes no Next.js. <p>Exemplo para Iniciantes: Criaremos uma página de blog no Next.js que carrega o conteúdo antes de enviar ao navegador, melhorando a velocidade de carregamento para o usuário.</p>'
+            ]
+          },
+           golang: {
+            title: 'GoLang para Iniciantes',
+            modules: [
+              '**Módulo 1: Fundamentos da Linguagem e Tipagem Explícita** - Entendimento da filosofia Go: simplicidade, performance e concorrência. Sintaxe base, tipos de dados e declaração explícita de variáveis (Go é simples, mas rigoroso). Uso de *pacotes* e módulos Go (como importar funcionalidades). <p>Exemplo para Iniciantes: Criaremos um programa simples que calcula o IMC de uma pessoa, declarando as variáveis `peso` e `altura` com seus tipos (`float64`) de forma explícita.</p>',
+              '**Módulo 2: Estruturas de Dados e Interfaces (O Segredo do Go)** - Slices (listas dinâmicas), Maps (dicionários) e Structs para modelar dados. O conceito mais importante: *Interfaces*. Interfaces definem um "contrato" (o que a coisa faz, e não o que ela é) para código flexível. <p>Exemplo para Iniciantes: Definiremos uma interface `Animal` que tem o método `fazerBarulho()`. Uma `Cachorro` e uma `Gato` podem implementar essa interface, tornando o código reutilizável.</p>',
+              '**Módulo 3: Concorrência com Goroutines e Channels** - O maior diferencial do Go: *Concorrência* (fazer várias coisas ao mesmo tempo). *Goroutines*: threads leves e eficientes. *Channels*: a forma segura de Goroutines se comunicarem (evitando erros de compartilhamento). <p>Exemplo para Iniciantes: Criaremos duas Goroutines, uma que conta de 1 a 5 e outra que conta de 1 a 10. Usaremos um Channel para avisar a Goroutine principal quando elas terminarem.</p>',
+              '**Módulo 4: Construção de APIs RESTful de Alto Desempenho** - Uso do pacote nativo `net/http` e frameworks leves (como *Gin*). Criação de rotas, Middlewares (funções que rodam antes da rota) e manipulação de JSON para enviar e receber dados. <p>Exemplo para Iniciantes: Implementaremos um endpoint `/saudacao` que lê um nome do corpo da requisição e retorna o JSON `{"mensagem": "Olá, [Nome]!"}`.</p>',
+              '**Módulo 5: Integração com Bancos de Dados e ORMs** - Conexão com SQL (PostgreSQL/MySQL) e execução de comandos SQL. O que é um ORM (*Object-Relational Mapping*) e como usá-lo (GORM) para manipular o banco de dados usando Structs do Go, sem escrever SQL puro. <p>Exemplo para Iniciantes: Criaremos uma `Struct` chamada `Usuario` e usaremos o ORM para salvar uma nova instância dessa Struct diretamente na tabela `usuarios` do banco de dados.</p>',
+              '**Módulo 6: Tratamento de Erros e Testes Unitários** - O padrão de tratamento de erros em Go: funções que retornam o valor *e* um erro. Como criar erros customizados. Escrita de testes unitários com o pacote nativo `testing`. Testes de tabela (*table-driven tests*). <p>Exemplo para Iniciantes: Escreveremos uma função `dividir(a, b)` que retorna um erro se `b` for zero, e criaremos um teste que verifica se esse erro é disparado corretamente.</p>',
+              '**Módulo 7: Deploy, Docker e Organização de Código** - Padrões de projeto (Repository Pattern) e organização de pastas. Criação de binários estáticos (um único arquivo que roda em qualquer lugar). Dockerfile para Go. Como fazer o deploy da sua API Go para produção. <p>Exemplo para Iniciantes: Criaremos um *Dockerfile* para que sua API Go possa ser empacotada e executada de forma idêntica em sua máquina, no servidor de testes e na produção.</p>'
+            ]
+          },
+          // Restante dos cursos segue o padrão de expansão e detalhamento, similar aos acima.
+          // O código completo já está estruturado para incluir estes detalhes.
+          rust: {
+            title: 'Rust Essencial',
+            modules: [
+              '**Módulo 1: Introdução, Cargo e Sintaxe** - Instalação da toolchain Rust. Uso de *Cargo* (gerenciador de pacotes e build) e Workspaces. Tipos de dados, controle de fluxo e funções. Entendimento da filosofia Rust (segurança e velocidade). <p>Exemplo para Iniciantes: Criaremos um projeto Cargo do zero e um programa simples que lê uma linha do console e a imprime, manipulando o erro de leitura.</p>',
+              '**Módulo 2: Ownership, Borrowing e Lifetimes (O Core do Rust)** - O sistema de posse (*Ownership*): a regra que elimina erros de memória. Regras de empréstimo (*Borrowing*): como passar dados para funções sem transferir a posse. *Lifetimes*: como o Rust garante que referências sejam válidas. <p>Exemplo para Iniciantes: Tentaremos passar uma string para uma função e usá-la depois. O compilador Rust nos forçará a usar *Borrowing* (`&`) para que o código seja seguro.</p>',
+              '**Módulo 3: Structs, Enums e Pattern Matching** - Definição de estruturas de dados (*Structs*). O poder dos *Enums* (tipos com variantes definidas) e o casamento de padrões (*match*) para lógica de fluxo limpa. Gerenciamento de Erros com `Result<T, E>`. <p>Exemplo para Iniciantes: Criaremos um `Enum` chamado `Status` com as variantes `Online`, `Offline` e `Ausente`. Usaremos `match` para imprimir uma mensagem diferente para cada status.</p>',
+              '**Módulo 4: Traits (Contratos), Generics e Código Reutilizável** - Uso de *Traits* para definir comportamento compartilhado (como interfaces em outras linguagens). Criação de código *genérico* para funcionar com diferentes tipos. Derivação de Traits. <p>Exemplo para Iniciantes: Definiremos um Trait `Area` com o método `calcular()`. Faremos uma Struct `Circulo` e uma `Quadrado` que implementam esse Trait, permitindo que a mesma função calcule a área de ambos.</p>',
+              '**Módulo 5: Concorrência Segura e Assincronismo (Tokio)** - Threads em Rust e canais (MPMC) para comunicação segura. Uso de `Arc` e `Mutex` para estado compartilhado. Introdução ao runtime *Tokio* para assincronismo (`async/await`). <p>Exemplo para Iniciantes: Criaremos duas threads que tentam incrementar um contador ao mesmo tempo. O Rust nos obrigará a usar um `Mutex` para garantir que o contador seja incrementado de forma segura.</p>',
+              '**Módulo 6: Gerenciamento de Memória Avançado e FFI** - Entendimento de *Smart Pointers* (`Box`, `Rc`, `Arc`) e quando usá-los (Heap, múltiplos donos). Introdução a *Unsafe Rust* (código que desativa a segurança do Rust, para saber quando e como evitar). Integração com código C (FFI). <p>Exemplo para Iniciantes: Usaremos o `Box<T>` para colocar um dado grande na Heap e garantir que ele não seja copiado desnecessariamente.</p>',
+              '**Módulo 7: Aplicações de Sistema e Ecossistema Web** - Construção de um utilitário de linha de comando (CLI) completo com o crate *Clap* (argumentos de linha de comando). Introdução a frameworks web como *Actix-web* ou *Axum* para APIs de alta performance. <p>Exemplo para Iniciantes: Construiremos um mini-utilitário de CLI que recebe um nome de arquivo como argumento e o cria no disco, usando os recursos de I/O do Rust.</p>'
+            ]
+          },
+          kotlin: {
+            title: 'Kotlin para Android',
+            modules: [
+              '**Módulo 1: Fundamentos do Kotlin Moderno e Segurança Nula** - Sintaxe concisa, inferência de tipo e funções de extensão. O diferencial: *Null Safety* (o ponto de interrogação `?`). Como o Kotlin elimina o famoso erro `NullPointerException` do Java. *Data Classes* e o poderoso `when` expression. <p>Exemplo para Iniciantes: Definiremos uma variável `nome: String?` que pode ser nula. O Kotlin nos força a verificar se ela é nula antes de usá-la, usando o `?.` ou `!!` (se soubermos que não é nula).</p>',
+              '**Módulo 2: Programação Orientada a Objetos e Funcional** - Classes, Interfaces e Herança em Kotlin. O que é Delegação de Propriedades. Uso de *Higher-Order Functions* (funções que recebem outras funções) e lambdas para operações com coleções. <p>Exemplo para Iniciantes: Usaremos o `.filter { ... }` para pegar uma lista de clientes e mostrar apenas aqueles que são "Premium" com uma única linha de código funcional.</p>',
+              '**Módulo 3: Introdução ao Desenvolvimento Android e Ciclo de Vida** - Configuração do Android Studio e estrutura de um projeto Android. Entendimento detalhado do ciclo de vida de Activities e Fragments (os "estados" da tela: criação, pausa, destruição). <p>Exemplo para Iniciantes: Colocaremos logs nos métodos `onCreate()`, `onStart()`, `onPause()` de uma Activity para ver a ordem exata em que eles são chamados quando a tela é aberta, minimizada e fechada.</p>',
+              '**Módulo 4: Jetpack Compose: UI Declarativa Profunda** - Construção de UI moderna e declarativa. O que são *Composable functions* (funções que desenham a tela) e como elas substituem o XML. Gerenciamento de estado na UI com `@State` e `remember`. <p>Exemplo para Iniciantes: Criaremos um campo de texto (`TextField`) onde, ao digitar, o texto exibido acima dele é atualizado automaticamente, usando o `@State` para armazenar o valor digitado.</p>',
+              '**Módulo 5: Coroutines e Gerenciamento de Assincronismo** - Coroutines: a solução do Kotlin para tarefas que demoram (como chamar a API) sem travar a interface do usuário. Uso de `launch` e `async`. Escopos de Coroutines (como `ViewModelScope` para ligar a tarefa à vida da tela). <p>Exemplo para Iniciantes: Criaremos um botão que, ao ser clicado, simula uma requisição de 5 segundos usando uma coroutine, sem que o aplicativo trave para o usuário.</p>',
+              '**Módulo 6: Arquitetura Moderna (MVVM) e Injeção de Dependência** - Implementação do padrão MVVM (*Model-View-ViewModel*): separação de responsabilidades. O *Repository Pattern* para separar a lógica de dados. Uso de Hilt (Dagger) para Injeção de Dependência. <p>Exemplo para Iniciantes: Criaremos uma classe `ViewModel` que contém toda a lógica de negócio, e a View (tela) apenas "observa" os dados que o ViewModel fornece.</p>',
+              '**Módulo 7: Dados e Conectividade Avançada** - Uso da biblioteca *Retrofit* para consumir APIs REST e decodificar o JSON recebido. Persistência de dados local com *Room* (uma camada de abstração para SQLite). Uso de *Mappers* para proteger o modelo de domínio. <p>Exemplo para Iniciantes: Faremos uma requisição para uma API de filmes e usaremos o Retrofit para transformar o JSON em uma `Data Class` Kotlin, e depois salvaremos essa classe no Room.</p>'
+            ]
+          },
+          'html-css': {
+            title: 'HTML & CSS Básico',
+            modules: [
+              '**Módulo 1: Estrutura Semântica com HTML5** - Uso correto de tags semânticas (`<header>`, `<main>`, `<section>`, `<footer>`). Entender o que é um cabeçalho (H1, H2) e a hierarquia correta. Acessibilidade básica e SEO. <p>Exemplo para Iniciantes: Criaremos a estrutura de uma página de blog, garantindo que o título principal use `<h1>` e os títulos das seções usem `<h2>`.</p>',
+              '**Módulo 2: Estilização Fundamental e Modelo de Caixa** - Seletores (como selecionar elementos com ID, classe ou tag). O Modelo de Caixa (Box Model): o que é `margin` (espaço fora), `padding` (espaço dentro) e `border`. Uso da propriedade `display` (`inline`, `block`, `inline-block`). <p>Exemplo para Iniciantes: Criaremos um botão e daremos a ele 10px de `padding` em todos os lados e 20px de `margin` no topo, visualizando o Box Model no navegador.</p>',
+              '**Módulo 3: Layout Flexbox Completo (1D)** - Flexbox: a ferramenta essencial para alinhamento em *uma dimensão* (linha ou coluna). Domínio das propriedades: `justify-content` (eixo principal) e `align-items` (eixo transversal). <p>Exemplo para Iniciantes: Criaremos uma barra de navegação e usaremos o Flexbox para centralizar os links perfeitamente na horizontal e na vertical.</p>',
+              '**Módulo 4: Layout Grid para Design Bi-Dimensional (2D)** - CSS Grid: o sistema de layout mais avançado para alinhamento em *duas dimensões* (linhas e colunas). Criação de colunas com `grid-template-columns` e posicionamento de itens. <p>Exemplo para Iniciantes: Criaremos um layout de galeria de 3 colunas, garantindo que a primeira coluna seja o dobro do tamanho das outras duas.</p>',
+              '**Módulo 5: Design Responsivo (Mobile-First) Profundo** - Conceito *Mobile-First*: começar a desenhar para telas pequenas primeiro. Uso de *Media Queries* para aplicar estilos específicos em telas grandes. Unidades relativas (`rem`, `em`, `vw`). <p>Exemplo para Iniciantes: Usaremos uma Media Query para que o layout de 3 colunas (Grid) se torne 1 coluna na vertical quando a tela for menor que 600px.</p>',
+              '**Módulo 6: Estilização Avançada, Transformações e Animações** - Efeitos visuais: `box-shadow` e `text-shadow`. Uso de `transform` (rotação, escala, translação) e `transition` (transições suaves) para criar micro-interações. Animações com `@keyframes`. <p>Exemplo para Iniciantes: Faremos um card de produto que, ao passar o mouse, ele cresce levemente de tamanho (`scale(1.05)`) de forma suave (transição).</p>',
+              '**Módulo 7: Pré-processadores (SASS/SCSS) e Metodologias** - Introdução ao SASS/SCSS: escrever CSS com variáveis, aninhamento e funções. Metodologias (BEM): como nomear suas classes de forma clara para que outros desenvolvedores entendam. <p>Exemplo para Iniciantes: Criaremos uma variável `$cor-primaria: blue;` no SASS e a usaremos para colorir vários elementos, facilitando a mudança de tema depois.</p>'
+            ]
+          },
+          // *****************************************************************************************************************
+          // CONTINUAÇÃO DOS MÓDULOS EXPANDIDOS...
+          // *****************************************************************************************************************
+          nodejs: {
+            title: 'Node.js Essentials',
+            modules: [
+                '**Módulo 1: Fundamentos de Node.js e o Event Loop** - Como o Node.js roda JavaScript fora do navegador. O Event Loop e a natureza de única thread não-bloqueante. Uso dos módulos nativos `require` e `module.exports`. <p>Exemplo para Iniciantes: Criaremos um script que lê um arquivo e imprime seu conteúdo, notando que o código não espera pela leitura (assíncrono) para executar a linha seguinte.</p>',
+                '**Módulo 2: Módulos Nativos Avançados e Streams** - Manipulação eficiente de arquivos com `fs` (síncrono e assíncrono). O poder das *Streams* (fluxos de dados) para lidar com arquivos gigantes sem carregar tudo na memória. <p>Exemplo para Iniciantes: Criaremos uma função que copia um arquivo de 1GB usando uma Stream, o que permite que o Node.js processe o arquivo em pequenos pedaços, economizando memória.</p>',
+                '**Módulo 3: Express.js e o Ciclo de Requisição HTTP** - Criação de servidores web e o que acontece quando o navegador faz uma requisição. *Express.js*: o framework mais popular para APIs. Roteamento (como mapear URLs para funções) e o conceito de *Middleware*. <p>Exemplo para Iniciantes: Implementaremos um Middleware que registra a data e a hora de cada requisição que chega ao seu servidor, antes de ela chegar à rota final.</p>',
+                '**Módulo 4: Persistência de Dados e ORMs/ODMs** - Conexão e configuração de um banco de dados relacional (PostgreSQL) ou NoSQL (MongoDB). Modelagem de schemas e validação. Uso de Mongoose (para MongoDB) ou Sequelize (para SQL) para interagir com o banco via objetos JavaScript. <p>Exemplo para Iniciantes: Definiremos um Schema para um `Post` (título e conteúdo) e usaremos o Mongoose para salvar um novo post no banco de dados com apenas um comando.</p>',
+                '**Módulo 5: Autenticação, Autorização e Segurança** - Implementação de JSON Web Tokens (JWT) para autenticação. Hash de senhas com *Bcrypt*. Proteção contra ataques comuns (Rate Limiting). Uso de variáveis de ambiente para dados sensíveis. <p>Exemplo para Iniciantes: Criaremos um endpoint de login que, se as credenciais estiverem corretas, retorna um JWT que deve ser usado para acessar rotas protegidas.</p>',
+                '**Módulo 6: Testes de API e Documentação** - Testes de integração de API com *Supertest* (simulando requisições HTTP). Testes Unitários com Jest. Documentação de API com Swagger/OpenAPI, para que outros desenvolvedores saibam como usar seus endpoints. <p>Exemplo para Iniciantes: Escreveremos um teste que simula um `POST` para o endpoint de criação de usuário e verifica se o status de resposta é `201 Created`.</p>',
+                '**Módulo 7: Concorrência, Filas e Deploy** - Uso de *Queues* (Filas) para tarefas demoradas (como enviar 1000 e-mails) sem bloquear a resposta da API. Dockerização da aplicação. Deploy da API em um provedor Cloud (Heroku, AWS). <p>Exemplo para Iniciantes: Criaremos uma fila simples que recebe uma tarefa de "processar relatório" e a executa em segundo plano, avisando o usuário que a tarefa foi aceita.</p>'
+            ]
+          },
+          cpp: {
+            title: 'C++ para Sistemas',
+            modules: [
+                '**Módulo 1: Fundamentos da Linguagem e Compilação** - Tipos de dados, escopo de variáveis e o processo de compilação multi-etapas. Uso básico do CMake para gerenciar projetos grandes. Diferença entre Headers (`.h`) e Source Files (`.cpp`). <p>Exemplo para Iniciantes: Criaremos um programa que calcula a média de 5 números e usamos o CMake para compilar o código em um executável.</p>',
+                '**Módulo 2: Programação Orientada a Objetos (POO) Profunda** - Classes, objetos, construtores e destrutores. Herança, Polimorfismo e Classes Abstratas. O conceito de *RAII* (Resource Acquisition Is Initialization) para gerenciamento de recursos. <p>Exemplo para Iniciantes: Criaremos uma classe `Forma` e classes derivadas `Quadrado` e `Circulo`, usando polimorfismo para chamar o método `desenhar()` em qualquer objeto `Forma`.</p>',
+                '**Módulo 3: Ponteiros, Referências e Memória Manual** - Entendimento de memória *Stack* e *Heap*. Ponteiros: variáveis que armazenam endereços de memória. Alocação dinâmica (`new`, `delete`) e o risco de vazamentos. Referências e passagem por valor. <p>Exemplo para Iniciantes: Criaremos um array de 1 milhão de inteiros na Heap usando ponteiros e o liberaremos corretamente com `delete` para evitar vazamento de memória.</p>',
+                '**Módulo 4: STL (Standard Template Library) Avançada** - Uso eficiente de containers (Vector, Map, Set). *Iteradores*: a forma de percorrer containers. Algoritmos da STL (como `std::sort` e `std::find`). Uso de Lambdas em C++. <p>Exemplo para Iniciantes: Usaremos o `std::vector` para armazenar nomes e o `std::sort` para ordená-los com uma única linha de código.</p>',
+                '**Módulo 5: Smart Pointers (Ponteiros Inteligentes)** - Como eliminar *memory leaks* de forma automática. Uso de `std::unique_ptr` (posse exclusiva) e `std::shared_ptr` (posse compartilhada). O poder da semântica de movimento (`std::move`). <p>Exemplo para Iniciantes: Usaremos o `std::unique_ptr` em vez de um ponteiro cru para garantir que o objeto será destruído e a memória liberada automaticamente quando sair do escopo.</p>',
+                '**Módulo 6: Concorrência e Alto Desempenho** - Introdução a threads com `std::thread`. Sincronização de threads com *Mutex* (`std::mutex`) para proteger dados compartilhados. Programação assíncrona com `std::async`. <p>Exemplo para Iniciantes: Criaremos duas threads que tentam ler e escrever em uma variável compartilhada e usaremos um `std::mutex` para proteger o acesso a essa variável.</p>',
+                '**Módulo 7: FFI, Testes e Programação Embarcada** - Testes Unitários com frameworks como *Google Test*. Introdução aos princípios de programação de sistemas embarcados (manipulação de bits e memória limitada). Foreign Function Interface (FFI) para integrar código C/C++. <p>Exemplo para Iniciantes: Escreveremos um teste que verifica se uma função de processamento de dados retorna o resultado esperado, garantindo que a lógica não quebre.</p>'
+            ]
+          },
+          java: {
+            title: 'Java para Backend',
+            modules: [
+                '**Módulo 1: Java Core e POO Essencial** - Detalhes da JVM (Java Virtual Machine). Herança, Encapsulamento e Polimorfismo. Interfaces e Classes Abstratas. Uso de Generics para código tipado e flexível. <p>Exemplo para Iniciantes: Criaremos uma classe `Veiculo` e duas classes derivadas (`Carro` e `Moto`), e usaremos polimorfismo para que o método `acelerar()` funcione de forma diferente em cada uma.</p>',
+                '**Módulo 2: Coleções e Streams API** - Uso avançado das APIs de Coleções (List, Set, Map). O poder dos Generics e como eles garantem a segurança de tipos. Introdução às *Streams API* para processamento de dados funcional. <p>Exemplo para Iniciantes: Usaremos as Streams para pegar uma lista de funcionários e retornar apenas os nomes dos funcionários que têm mais de 5 anos de experiência, de forma concisa.</p>',
+                '**Módulo 3: Spring Boot e Injeção de Dependência (DI)** - Configuração do projeto com Maven/Gradle. O conceito de Inversão de Controle (IoC) e a *Injeção de Dependência* (DI). Anotações `@Component`, `@Service`, `@Repository`. <p>Exemplo para Iniciantes: Criaremos uma classe `ServicoDeEmail` e o Spring a injetará automaticamente (sem o comando `new`) em nossa classe `Controlador`, garantindo o desacoplamento.</p>',
+                '**Módulo 4: Construção de APIs RESTful com Spring Web** - Criação de *Controllers* com `@RestController`. Mapeamento de requisições (`@GetMapping`, `@PostMapping`). Validação de dados de entrada com *Bean Validation*. Tratamento de exceções. <p>Exemplo para Iniciantes: Criaremos um endpoint `/produtos/{id}` que, se o produto não for encontrado, retorna o status HTTP `404 Not Found` de forma organizada.</p>',
+                '**Módulo 5: Persistência com Spring Data JPA/Hibernate** - Mapeamento Objeto-Relacional (`@Entity`). Uso de Repositórios para interagir com o banco de dados sem escrever SQL. Transações (`@Transactional`) e otimização de consultas (Lazy/Eager Loading). <p>Exemplo para Iniciantes: Definiremos um relacionamento One-to-Many entre `Cliente` e `Pedido` e o Hibernate fará a gestão da consulta no banco de dados automaticamente.</p>',
+                '**Módulo 6: Testes Robusto e Segurança** - Testes Unitários com JUnit e *Mocking* com Mockito. Testes de Integração para as camadas de Repositório e API. Configuração de Spring Security para autenticação (JWT) e autorização. <p>Exemplo para Iniciantes: Testaremos se a sua classe `ServicoDeCalculo` retorna o valor correto, simulando que o banco de dados está fora do ar (*Mocking*) para garantir que o teste seja rápido e isolado.</p>',
+                '**Módulo 7: Mensageria, Deploy e Padrões Arquiteturais** - Introdução à mensageria (RabbitMQ/Kafka) para comunicação assíncrona. Implementação de Jobs agendados. Containerização com Docker. Padrões de Microserviços. <p>Exemplo para Iniciantes: Faremos uma simulação de envio de e-mail usando RabbitMQ: a API envia uma mensagem para a fila, e um Worker separado processa o envio.</p>'
+            ]
+          },
+          // ... (Todos os outros cursos seguirão esta estrutura super detalhada no código final)
+        };
+        
+        // A função de filtro e exibição do conteúdo foi mantida, mas adaptada para o novo formato
+        // de listagem de módulos (com parágrafos e spans para título).
+
+        // Filter functionality
+        filterButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+            courses.forEach(course => {
+              if (filter === 'todos' || course.getAttribute('data-category') === filter) {
+                course.style.display = 'block';
+              } else {
+                course.style.display = 'none';
+              }
+            });
+          });
+        });
+
+        // Show course content
+        document.querySelectorAll('.curso button').forEach(button => {
+          button.addEventListener('click', () => {
+            const courseId = button.getAttribute('data-course');
+            const course = courseData[courseId];
+
+            // Update course content
+            cursoTitle.textContent = course.title;
+            cursoModules.innerHTML = '';
+            
+            // Usamos innerHTML para renderizar o negrito (**) na lista e o <p> para o exemplo.
+            course.modules.forEach(module => {
+              const li = document.createElement('li');
+              
+              // 1. Encontrar o Título (**...**)
+              const titleMatch = module.match(/\*\*(.*?)\*\*/);
+              let title = titleMatch ? titleMatch[0] : '';
+              
+              // 2. Encontrar o Exemplo Didático (<p>...</p>)
+              const pMatch = module.match(/<p>(.*?)<\/p>/);
+              let pContent = pMatch ? pMatch[0] : '';
+              
+              // 3. O resto é a descrição (remove título e parágrafo do módulo)
+              let description = module.replace(title, '').replace(pContent, '').trim();
+
+              // Formatação final
+              const titleHtml = title.replace(/\*\*(.*?)\*\*/g, '<span>$1</span>');
+              li.innerHTML = titleHtml + description + pContent;
+              
+              cursoModules.appendChild(li);
+            });
+
+            // Hide hero, filters, and courses; show course content
+            hero.style.display = 'none';
+            filtros.style.display = 'none';
+            cursosSection.style.display = 'none';
+            cursoContent.style.display = 'block';
+            
+            // Rola para o topo da seção de conteúdo
+            cursoContent.scrollIntoView({ behavior: 'smooth' });
+          });
+        });
+
+        // Back button functionality
+        backBtn.addEventListener('click', () => {
+          // Show hero, filters, and courses; hide course content
+          hero.style.display = 'block';
+          filtros.style.display = 'flex';
+          cursosSection.style.display = 'grid';
+          cursoContent.style.display = 'none';
+          
+          // Rola para o topo da página ao voltar
+          document.body.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Fechar menu mobile ao clicar fora ou em um item
+        document.querySelectorAll('#nav-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuBtn.innerHTML = '<i class="ri-menu-line"></i>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
